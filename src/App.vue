@@ -1,6 +1,7 @@
 <template>
   <div id="app">
-    APP  <el-button icon="el-icon-search" circle></el-button>
+    <!-- 一级路由对应组件渲染的位置 -->
+    <router-view></router-view>
   </div>
 </template>
 
