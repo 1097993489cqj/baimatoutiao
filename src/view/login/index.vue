@@ -3,11 +3,11 @@
     <el-card class="login-box">
       <img src="../../assets/images/logo_index.png" alt />
       <!-- 登录表单 -->
-      <el-form ref="loginForm" :model="loginForm">
-        <el-form-item>
+      <el-form ref="loginForm" :status-icon="true" :model="loginForm" :rules="loginRules">
+        <el-form-item prop="mobile">
           <el-input v-model="loginForm.mobile" placeholder="请输入手机号"></el-input>
         </el-form-item>
-        <el-form-item>
+        <el-form-item prop="code">
           <el-input v-model="loginForm.code" placeholder="请输入验证码" style="width:240px"></el-input>
         <el-button style="float:right">发送验证码</el-button>
         </el-form-item>
@@ -25,10 +25,21 @@
 <script>
 export default {
   data () {
+    //   表单数据对象
     return {
       loginForm: {
         mobile: '',
         code: ''
+      },
+      //   表单规则对象
+      loginRules: {
+        mobile: [
+          { required: true, message: '请输入手机号', trigger: 'blur' }
+        ],
+        code: [
+          { required: true, message: '请输入验证码', trigger: 'blur' }
+
+        ]
       }
     }
   }
