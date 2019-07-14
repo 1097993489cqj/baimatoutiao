@@ -9,13 +9,13 @@
         </el-form-item>
         <el-form-item prop="code">
           <el-input v-model="loginForm.code" placeholder="请输入验证码" style="width:240px"></el-input>
-        <el-button style="float:right">发送验证码</el-button>
+          <el-button style="float:right">发送验证码</el-button>
         </el-form-item>
         <el-form-item>
-             <el-checkbox :value="true">我已阅读并同意用户协议和隐私条款</el-checkbox>
+          <el-checkbox :value="true">我已阅读并同意用户协议和隐私条款</el-checkbox>
         </el-form-item>
         <el-form-item>
-            <el-button style="width:100%" type="primary">登 录</el-button>
+          <el-button style="width:100%" type="primary">登 录</el-button>
         </el-form-item>
       </el-form>
     </el-card>
@@ -25,6 +25,15 @@
 <script>
 export default {
   data () {
+    //   校验手机号
+    const checkMobile = (rule, value, callback) => {
+      // 校验逻辑 把value拿出来就行手机号的格式校验
+      if (/^1[3-9]\d{9}$/.test(value)) {
+        callback()
+      } else {
+        callback(new Error('手机号格式不正确'))
+      }
+    }
     //   表单数据对象
     return {
       loginForm: {
@@ -34,11 +43,12 @@ export default {
       //   表单规则对象
       loginRules: {
         mobile: [
-          { required: true, message: '请输入手机号', trigger: 'blur' }
+          { required: true, message: '请输入手机号', trigger: 'blur' },
+          { validator: checkMobile, trigger: 'blur' }
         ],
         code: [
-          { required: true, message: '请输入验证码', trigger: 'blur' }
-
+          { required: true, message: '请输入验证码', trigger: 'blur' },
+          { len: 6, message: '请输入6位数字', trigger: 'blur' }
         ]
       }
     }
