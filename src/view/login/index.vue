@@ -15,7 +15,7 @@
           <el-checkbox :value="true">我已阅读并同意用户协议和隐私条款</el-checkbox>
         </el-form-item>
         <el-form-item>
-          <el-button style="width:100%" type="primary">登 录</el-button>
+          <el-button style="width:100%" type="primary" @click="login">登 录</el-button>
         </el-form-item>
       </el-form>
     </el-card>
@@ -51,6 +51,32 @@ export default {
           { len: 6, message: '请输入6位数字', trigger: 'blur' }
         ]
       }
+    }
+  },
+  methods: {
+    login () {
+      //   对整个表单进行校验
+      this.$refs.loginForm.validate(valid => {
+        if (valid) {
+          // 提交登录请求 axios 是基于prmise封装的 post() 返回值一个promise对象
+          this.$http
+            .post(
+              'http://ttapi.research.itcast.cn/mp/v1_0/authorizations',
+              this.loginForm
+            )
+            .then(res => {
+              // res是响应对象 包含 后台返回的数据 res.data
+            //   console.log(res.data)去做什么事情????
+            // 1.跳转到首页
+            // 2.TODO  2.保存用户的信息 用来 判断登录的状态
+              this.$router.push('/')
+            })
+            .catch(() => {
+              // 提示错误
+              this.$message.error('手机号或者验证码错误')
+            })
+        }
+      })
     }
   }
 }
